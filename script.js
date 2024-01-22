@@ -12,6 +12,10 @@ function ageCalculate(){
     let currentYear = today.getFullYear();
     let currentMonth = today.getMonth()+1;
     let currentDate = today.getDate();
+    
+    console.log("Current Date:", today);
+    console.log("Input Date:", inputDate);
+    console.log("Birth Details:", birthDetails);
 
     leapChecker(currentYear);
 
@@ -32,21 +36,26 @@ function ageCalculate(){
     }
     else{
         birthYear--;
-        birthMonth = 12 + currentMonth - birthDetails.month;
+        birthMonth = (currentMonth + 12 - birthDetails.month) % 12;
     }
 
-    if(currentDate >= birthDetails.date){
+    if (currentDate >= birthDetails.date) {
         birthDate = currentDate - birthDetails.date;
-    }
-    else{
+    } else {
         birthMonth--;
-        let days = months[currentMonth - 2];
-        birthDate = days + currentDate - birthDetails.date;
-        if(birthMonth < 0){
+        let daysInPrevMonth = months[(currentMonth + 11) % 12]; // 获取上一个月的天数
+        birthDate = daysInPrevMonth + currentDate - birthDetails.date + 1;
+        if (birthMonth < 0) {
             birthMonth = 11;
             birthYear--;
         }
     }
+
+    
+    console.log("Birth Year:", birthYear);
+    console.log("Birth Month:", birthMonth);
+    console.log("Birth Date:", birthDate);
+        
     displayResult(birthDate,birthMonth,birthYear);
 }
 
